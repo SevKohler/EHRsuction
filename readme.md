@@ -1,5 +1,3 @@
-pip install -r requirements.txt
-
 
 # EHRsuction
 Downloads all Compositions from an openEHR platform and exports it into
