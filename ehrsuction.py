@@ -16,7 +16,6 @@ def main():
 	steps = config["steps"]
 	auth = HTTPBasicAuth(config["auth"]["username"], config["auth"]["password"])
 
-
 	# check if output folder already exists change if you want flat to EXPO
 	file_handler = fh.FileHandler(exportType, output_folder + "EHR_export/")
 	file_handler.register_already_downloaded_files()

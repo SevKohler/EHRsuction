@@ -1,7 +1,7 @@
-base_url: "http://localhost:8080"
-output_folder: "/home/severin/Downloads/"
-platform: "EHRBASE"
-export_type: "CANONICAL"
+base_url: "http://localhost:8080" # platform base url
+output_folder: "/home/username/Downloads/" # Folder where the files are exported to
+platform: "EHRBASE" # BETTER or EHRBASE
+export_type: "CANONICAL" # FLAT only supported for better
 steps: 10000
 
 auth:
@@ -9,5 +9,5 @@ auth:
   password: "myPassword432"
 
 logging:
-  cmd_level: "info"
-  file_level: "debug"
+  cmd_level: "info" # what you see on the cmd INFO DEBUG ERROR are supported
+  file_level: "debug" # what ends up in the log file INFO DEBUG ERROR are supported

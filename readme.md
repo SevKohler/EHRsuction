@@ -14,7 +14,7 @@ Ehrbase only CANONICAL export is supported so far.
 ## Use
 1. Download dependencies
    `pip install -r requirements.txt`
-2. Modify ehrsuction config in ehrsuction.py
+2. Modify config.yaml to your liking
 3. Run EHRsuction
    `python3 ehrsuction.py`
 
