@@ -181,7 +181,7 @@ class EHRSuctionClient:
             for ehr_id, composition in response.get("rows", []):
                 self.process_query_better(ehr_id, composition)
 
-    def process_query_better(self, item):
+    def process_query_ehrbase(self, item):
         ehr_folder = os.path.join(self.fileHandler.get_output_folder(), item[0])  # Use first element as folder name
         self.fileHandler.write_composition(
             item[1].get("uid", {}).get("value"),  # Extract UID value
@@ -190,7 +190,7 @@ class EHRSuctionClient:
         )
         composition_type = item[1].get("name", {}).get("value")
         self.composition_types_amount_count(composition_type)
-    def process_query_ehrbase(self, ehr_id, composition):
+    def process_query_better(self, ehr_id, composition):
         ehr_folder = os.path.join(self.fileHandler.get_output_folder(), ehr_id)  # Use EHR ID as folder name
         # Extract composition UID safely
         composition_uid = composition.get("uid", {}).get("value")
