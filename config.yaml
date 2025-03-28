@@ -11,3 +11,6 @@ auth:
 logging:
   cmd_level: "info" # what you see on the cmd INFO DEBUG ERROR are supported
   file_level: "debug" # what ends up in the log file INFO DEBUG ERROR are supported
+
+
+#atest
