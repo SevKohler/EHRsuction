@@ -92,9 +92,9 @@ class EHRSuctionClient:
     def create_all_ehr_folders(self):
         aql = "SELECT e/ehr_id/value FROM EHR e"
         if self.platform == Platforms.EHRBASE:
-            aql =  aql + "ORDER BY e/ehr_id/value" # bad performance but does not supportn time_created yet
+            aql =  aql + " ORDER BY e/ehr_id/value" # bad performance but does not support time_created yet
         else:
-            aql =  aql + "ORDER BY e/time_created/value" # bad performance but does not supportn time_created yet
+            aql =  aql + " ORDER BY e/time_created/value" # bad performance but does not support time_created yet
         self.session
         response = self.session.post(
             self.query_endpoint,
