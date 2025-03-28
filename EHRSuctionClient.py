@@ -175,25 +175,30 @@ class EHRSuctionClient:
     def process_response_query(self, response):
         if self.platform == Platforms.EHRBASE:
             for item in response.get("rows"):
-                ehr_folder = os.path.join(self.fileHandler.get_output_folder(), item[0])  # Use first element as folder name
-                self.fileHandler.write_composition(
-                    item[1].get("uid", {}).get("value"),  # Extract UID value
-                    item[1],  # Pass the full dictionary
-                    ehr_folder
-                )
-                composition_type = item[1].get("name", {}).get("value")
-                self.composition_types_amount_count(composition_type)
+                self.process_query_ehrbase(item)
 
         if self.platform == Platforms.BETTER:
             for ehr_id, composition in response.get("rows", []):
-                ehr_folder = os.path.join(self.fileHandler.get_output_folder(), ehr_id)  # Use EHR ID as folder name
-                # Extract composition UID safely
-                composition_uid = composition.get("uid", {}).get("value")
-                # Write composition data
-                self.fileHandler.write_composition(composition_uid, composition, ehr_folder)
-                # Extract and count composition type
-                composition_type = composition.get("name", {}).get("value")
-                self.composition_types_amount_count(composition_type)
+                self.process_query_better(ehr_id, composition)
+
+    def process_query_better(self, item):
+        ehr_folder = os.path.join(self.fileHandler.get_output_folder(), item[0])  # Use first element as folder name
+        self.fileHandler.write_composition(
+            item[1].get("uid", {}).get("value"),  # Extract UID value
+            item[1],  # Pass the full dictionary
+            ehr_folder
+        )
+        composition_type = item[1].get("name", {}).get("value")
+        self.composition_types_amount_count(composition_type)
+    def process_query_ehrbase(self, ehr_id, composition):
+        ehr_folder = os.path.join(self.fileHandler.get_output_folder(), ehr_id)  # Use EHR ID as folder name
+        # Extract composition UID safely
+        composition_uid = composition.get("uid", {}).get("value")
+        # Write composition data
+        self.fileHandler.write_composition(composition_uid, composition, ehr_folder)
+        # Extract and count composition type
+        composition_type = composition.get("name", {}).get("value")
+        self.composition_types_amount_count(composition_type)
 
     def export_query_flat(self):
         count = 0
