@@ -1,8 +1,8 @@
 base_url: "http://localhost:8080" # platform base url
-output_folder: "/home/username/Downloads/" # Folder where the files are exported to
+output_folder: "/home/severin/Downloads/" # Folder where the files are exported to
 platform: "EHRBASE" # BETTER or EHRBASE
 export_type: "CANONICAL" # FLAT only supported for better
-steps: 10000
+steps: 10000 # how much compositions are mapped per AQL e.g. 10000 per process, the bigger the number to longer queries take
 
 auth:
   username: "myuser"
