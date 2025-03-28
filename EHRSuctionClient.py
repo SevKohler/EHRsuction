@@ -90,11 +90,16 @@ class EHRSuctionClient:
         self.session.close()
 
     def create_all_ehr_folders(self):
+        aql = "SELECT e/ehr_id/value FROM EHR e"
+        if self.platform == Platforms.EHRBASE:
+            aql =  aql + "ORDER BY e/ehr_id/value" # bad performance but does not supportn time_created yet
+        else:
+            aql =  aql + "ORDER BY e/time_created/value" # bad performance but does not supportn time_created yet
         self.session
         response = self.session.post(
             self.query_endpoint,
             headers=self.headers,
-            json={"q": "Select e/ehr_id/value from EHR e ORDER BY e/time_created/value"},
+            json={"q": aql},
             auth=self.auth,
             verify=False  # This disables SSL verification
         )
@@ -116,6 +121,7 @@ class EHRSuctionClient:
             logger.info(f"=== Processing data from EHR {ehr_id}")
             logger.info(f"=== EHR {count} of {len(self.fileHandler.get_ehr_id_list())}")
             self.export_query_canonical(ehr_id, self.limit, self.offset)
+
     def export_query_canonical(self,ehr_id, limit, offset):
         count = 0
         while True: # changed to loop to save memory from recursion
@@ -138,6 +144,8 @@ class EHRSuctionClient:
                 self.process_response_query(response.json())
                 offset += self.steps  # Move offset forward
                 gc.collect()  # Explicit garbage collection
+                if self.check_rows_empty(response):
+                    break
             elif response.status_code == 204:
                 logger.info("Finished.")
                 self.actual_ehrs = len(self.fileHandler.get_ehr_id_list())
@@ -165,7 +173,6 @@ class EHRSuctionClient:
             logger.error("Check the script or server settings")
 
     def process_response_query(self, response):
-        print(response)
         if self.platform == Platforms.EHRBASE:
             for item in response.get("rows"):
                 ehr_folder = os.path.join(self.fileHandler.get_output_folder(), item[0])  # Use first element as folder name
@@ -246,3 +253,12 @@ class EHRSuctionClient:
             self.composition_types_amount[composition_type] = 0
         else:
             self.composition_types_amount[composition_type] = self.composition_types_amount[composition_type] + 1
+
+    def check_rows_empty(self, response):
+        if self.platform == Platforms.EHRBASE:
+            if not response.json()['rows']:
+                return True
+        if self.platform == Platforms.BETTER:
+            if not response.json.get("rows"):
+                return True
+        return False

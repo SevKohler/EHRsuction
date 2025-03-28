@@ -2,18 +2,21 @@ from requests.auth import HTTPBasicAuth
 import FileHandler as fh
 import EHRSuctionClient as oc
 from Variables import ExportType, Platforms
-
-#========= CONFIG=========
-base_url = "base_url" # base_url of platform, script will add the rest for ehrbase and better
-output_folder = "/home/USER/Downloads/" # folder you want to export to
-platform = Platforms.BETTER # Better
-exportType = ExportType.CANONICAL # flat
-steps = 10000 # bulk export steps
-auth=HTTPBasicAuth('username', 'password')
-#========= CONFIG=========
+import yaml
 
 
 def main():
+	with open("config.yaml", "r") as file:
+		config = yaml.safe_load(file)
+	# Assign values from config
+	base_url = config["base_url"]
+	output_folder = config["output_folder"]
+	platform = Platforms[config["platform"].upper()]  # Convert string to Platforms Enum
+	exportType = ExportType[config["export_type"].upper()]  # Convert string to ExportType Enum
+	steps = config["steps"]
+	auth = HTTPBasicAuth(config["auth"]["username"], config["auth"]["password"])
+
+
 	# check if output folder already exists change if you want flat to EXPO
 	file_handler = fh.FileHandler(exportType, output_folder + "EHR_export/")
 	file_handler.register_already_downloaded_files()

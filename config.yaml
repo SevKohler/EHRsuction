@@ -1,0 +1,13 @@
+base_url: "http://localhost:8080"
+output_folder: "/home/severin/Downloads/"
+platform: "EHRBASE"
+export_type: "CANONICAL"
+steps: 10000
+
+auth:
+  username: "myuser"
+  password: "myPassword432"
+
+logging:
+  cmd_level: "info"
+  file_level: "debug"
