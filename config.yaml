@@ -1,7 +1,7 @@
 base_url: "http://localhost:8080" # platform base url
 output_folder: "/home/severin/Downloads/" # Folder where the files are exported to
-platform: "EHRBASE" # BETTER or EHRBASE
-export_type: "CANONICAL" # FLAT only supported for better
+platform: "EHRBASE" # BETTER or EHRBASE, BETTER should work also for all other platfoms, EHRBASE has currently smt wrong in the body return (already reported)
+export_type: "CANONICAL" # FLAT only supported for BETTER (the view is in resoures).
 steps: 10000 # how much compositions are mapped per AQL e.g. 10000 per process, the bigger the number to longer queries take
 
 auth:

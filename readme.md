@@ -1,20 +1,37 @@
-
 # EHRsuction
-Downloads all Compositions from an openEHR platform and exports it into
-EHR_UID/composition-name.json structure.
-Also supports FLAT using the view provided in resources for Better, needs to uploaded there first.
-Contact your Better support to know how. 
 
-Ehrbase only CANONICAL export is supported so far. 
+EHRsuction downloads all **Compositions** from an **openEHR** platform and exports them into an organized structure:
 
-## Requirements:
-* Running openEHR server
-* python3
+**EHR_UID/composition-name.json**
+
+It also supports **FLAT format** using the view provided in the `resources` directory for **Better**.  
+(⚠️ You need to upload it first—contact **Better support** for guidance.)
+
+For **EHRbase**, only **CANONICAL export** is currently supported.
+
+---
+
+## Requirements
+- A running **openEHR** server
+- **Python 3**
+
+---
 
 ## Use
-1. Download dependencies
-   `pip install -r requirements.txt`
-2. Modify config.yaml to your liking
-3. Run EHRsuction
-   `python3 ehrsuction.py`
+1. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+2. Modify `config.yaml` to your desired settings.
+3. Run EHRsuction:
+   ```bash
+   python3 ehrsuction.py
+   ```
+
+---
+
+## Side Note
+The **BETTER** setting for **CANONICAL** format also works with other **openEHR** platforms that correctly implement the **REST API**.
+
+However, **EHRBASE** currently returns a **non-standardized response body** (`rows`), which has already been reported.  
 
