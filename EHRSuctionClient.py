@@ -132,7 +132,7 @@ class EHRSuctionClient:
         while True:  # changed to loop to save memory from recursion, garbage solution thou
             start_time_1 = time.time()
             aql = (
-                "SELECT e/ehr_id/value, c FROM EHR e CONTAINS Composition c "
+                "SELECT e/ehr_id/value, c FROM EHR e CONTAINS COMPOSITION c "
                 "ORDER BY c/context/start_time/value LIMIT {} OFFSET {}"
             ).format(limit, offset)
             logger.debug("Send query: " + aql)
